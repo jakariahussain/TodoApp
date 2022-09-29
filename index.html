@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do Apps</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        button.btn.btn-danger.position-absolute.right-0 {
+            right: 0;
+        }
+
+        .single-checkBox {}
+
+        span.w-100.d-block.mt-20 {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-form">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 mt-4">
+                        <div class="todoForm">
+                            <form action="" id="FormField" class="d-flex">
+                                <div class="form-group w-100 mr-2">
+                                    <input name="" type="text" class="form-control" id="taskForm"
+                                        placeholder="Enter your value">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Add Task</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h1 class="title-incomplate">IncomplateTask</h1>
+                        <div id="IncomplateTask"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div id="complateTask">
+                            <h1 class="title-incomplate">ComplateTask</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <script>
+        let FormField = document.querySelector('#FormField')
+        let taskForm = document.querySelector('#taskForm')
+        let IncomplateTask = document.querySelector('#IncomplateTask')
+        let complateTask = document.querySelector('#complateTask')
+
+        FormField.addEventListener('submit', function (e) {
+            if (taskForm.value === '') {
+                alert('please Add task')
+            }
+            TodoApp()
+            e.preventDefault()
+        })
+
+        function TodoApp(task) {
+            let Div = document.createElement('div')
+            Div.className = 'todoListApp'
+            let ul = document.createElement('ul')
+            ul.className = 'list-group'
+            let li = document.createElement('li')
+            li.className = 'list-group-item'
+            let span = document.createElement('span')
+            let textSpan = document.createElement('span')
+            span.className = 'mr-1'
+            let checkBox = document.createElement('input')
+            checkBox.type = 'checkbox'
+            checkBox.addEventListener('click', function () {
+
+                let DeleteBtn = document.createElement('button')
+                DeleteBtn.className = 'btn btn-primary close'
+                DeleteBtn.innerHTML = 'Delete'
+                DeleteBtn.addEventListener('click', function () {
+                    complateTask.removeChild(li)
+                })
+                li.appendChild(DeleteBtn)
+
+                let EditBtn = document.createElement('button')
+                EditBtn.className = 'close btn btn-danger mr-1'
+                EditBtn.innerHTML = 'Edit'
+                EditBtn.addEventListener('click', function () {
+                    li.className = 'position-reletive list-group-item'
+                    let textArea = document.createElement('textarea')
+                    textArea.className = 'form-control position-absoulte'
+                    textArea.style.top = '0'
+                    textArea.style.left = '0'
+                    textArea.addEventListener('keypress', function (event) {
+                        event.stopPropagation()
+                        if (event.keyCode === 13) {
+                            if (this.value) {
+                                textSpan.innerText = this.value
+                            }
+                        }
+                    })
+                    textSpan.appendChild(textArea)
+                })
+                li.appendChild(EditBtn)
+                complateTask.appendChild(li)
+                li.removeChild(span)
+            })
+
+            IncomplateTask.appendChild(Div)
+            Div.appendChild(ul)
+            ul.appendChild(li)
+            li.appendChild(span)
+            span.appendChild(checkBox)
+            textSpan.appendChild(document.createTextNode(taskForm.value))
+            li.appendChild(textSpan)
+            taskForm.value = ''
+
+        }
+
+
+        // // Ui Constent value
+        // let FormField = document.querySelector('#FormField')
+        // let taskForm = document.querySelector('#taskForm')
+        // let IncomplateTask = document.querySelector('#IncomplateTask')
+        // let complateTask = document.querySelector('#complateTask')
+
+        // // Add EventListener
+        // function TodoApss(){
+        //     FormField.addEventListener('submit', function(e){
+        //     if(taskForm.value === ''){
+        //         alert('please add task')
+        //     }
+        //     let DIV = document.createElement('div')
+        //     DIV.className = 'single-checkBox'
+        //     let Checkbox = document.createElement('input')
+        //     Checkbox.type = 'checkbox'
+        //     Checkbox.addEventListener('click', function(){
+        //         let Delete = document.createElement('button')
+        //         Delete.className = 'btn btn-danger position-absolute right-0'
+        //         Delete.innerHTML = 'Delete'
+        //         Delete.addEventListener('click', ()=>{
+        //             if(complateTask.removeChild(span)){
+        //                 confirm('Are you sure')
+        //             }
+        //         })
+        //         span.appendChild(Delete)
+        //         span.className = 'w-100 d-block mt-20'
+        //         complateTask.appendChild(span)
+        //         DIV.removeChild(Checkbox)
+        //     })
+        //     let span = document.createElement('span')
+        //     span.className = 'ml-2 position-relative'
+        //     span.appendChild(document.createTextNode(taskForm.value))
+        //     DIV.appendChild(Checkbox)
+        //     DIV.appendChild(span)
+        //     IncomplateTask.appendChild(DIV)
+        //     taskForm.value = ''
+        //     e.preventDefault()
+        // })
+        // }
+        // TodoApss()
+    </script>
+
+
+
+
+
+
+
+
+
+    <!-- <script>
+
+        let form = document.querySelector('#form')
+        let InputTask = document.querySelector('#InputTask')
+        let collect = document.querySelector('.collect')
+        let collection = document.querySelector('.collection')
+        let clearAllTask = document.querySelector('#clear')
+        loadEventListener()
+
+        function loadEventListener(){
+            form.addEventListener('submit', addTask)
+            
+        }
+
+        function addTask(e){
+            if(InputTask.value === ''){
+                alert('Add A Task')
+            }
+            let li = document.createElement('li')
+            li.className= 'list-group text-white'
+            collection.appendChild(li)
+            li.appendChild(document.createTextNode(InputTask.value))
+            // Close btn
+            let Close = document.createElement('a')
+            Close.className = 'close'
+            Close.innerHTML = 'X'
+            Close.addEventListener('click', removed)
+            function removed(){
+                li.className = 'd-none'
+            }
+            li.appendChild(Close)
+            InputTask.value=''
+            
+            e.preventDefault()
+        }
+
+        clear.addEventListener('click', removedTask)
+        function removedTask(){
+            collection.className = 'd-none'
+        }
+
+    </script> -->
+</body>
+
+</html>
